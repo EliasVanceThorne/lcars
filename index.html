@@ -1,163 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCARS REDMI NOTE 8 PRO - BATTERY LINK MATRIX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LCARS REDMI NOTE 8 PRO LIVE WALLPAPER v4.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <style>
-        body {
-            background-color: #0b0b0e;
-            color: #FF9900;
-            font-family: 'Antonio', sans-serif;
+        /* LAYOUT FULLSCREEN PER SFONDO ANIMATO */
+        html, body {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 30px;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .control-panel {
-            width: 380px;
-            background-color: #12121c;
-            border: 2px solid #222233;
-            border-radius: 12px;
-            padding: 20px;
-            box-sizing: border-box;
-            height: fit-content;
-        }
-
-        .control-panel h3 {
-            color: #9999FF;
-            margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #333344;
-            padding-bottom: 8px;
-        }
-
-        .input-group { margin-bottom: 15px; }
-
-        label {
-            display: block;
-            color: #CC99CC;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        input, textarea {
+            padding: 0;
             width: 100%;
-            background-color: #000;
-            border: 1px solid #444466;
-            color: #FFF;
-            padding: 8px;
-            font-family: 'Antonio', sans-serif;
-            font-size: 1rem;
-            border-radius: 4px;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        button.btn-capture {
-            width: 100%;
-            background-color: #00FFCC;
-            color: #000;
-            padding: 12px;
-            font-family: 'Antonio', sans-serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
-        }
-
-        /* --- REDMI NOTE 8 PRO CANVAS (1080x2340) --- */
-        .phone-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .phone-canvas {
-            width: 415px;  
-            height: 900px; 
-            background-color: #000000;
-            position: relative;
-            box-sizing: border-box;
+            height: 100%;
             overflow: hidden;
+            background-color: #000000;
+            font-family: 'Antonio', sans-serif;
+            color: #FF9900;
+        }
+
+        /* Il contenitore principale che occupa l'intero display del telefono */
+        .live-wallpaper-container {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            border: 4px solid #222222;
-            border-radius: 24px;
+            box-sizing: border-box;
+            position: relative;
         }
 
-        .canvas-info {
-            color: #555566;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            text-transform: uppercase;
+        /* Safe area per il notch del Redmi Note 8 Pro */
+        .notch-buffer {
+            height: 45px;
+            width: 100%;
+            flex-shrink: 0;
         }
 
-        .notch-buffer { height: 45px; width: 100%; }
-
-        .lcars-header-arch {
+        /* --- ARCO LCARS INFERIORE (Come base dell'interfaccia) --- */
+        .lcars-bar-bottom {
             display: flex;
             flex-direction: row;
             height: 50px;
             width: 100%;
             flex-shrink: 0;
+            margin-top: auto; /* Posizionato in basso */
         }
 
-        .arch-left-curve {
+        .bar-left-block {
             width: 70px;
-            background-color: #FFCC33;
-            border-radius: 25px 0 0 0;
+            background-color: #CC99CC;
+            border-radius: 0 0 0 25px;
             margin-right: 6px;
         }
 
-        .arch-mid-gap {
+        .bar-mid-segment {
             flex-grow: 1;
-            border-top: 12px solid #FFCC33;
+            border-bottom: 12px solid #CC99CC;
             margin-right: 6px;
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            color: #FFCC33;
-            font-size: 0.8rem;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding-left: 10px;
+            color: #CC99CC;
+            font-size: 0.9rem;
             font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .arch-right-block {
+        .bar-right-curve {
             width: 50px;
-            background-color: #CC99CC;
-            border-radius: 0 15px 0 0;
+            background-color: #FFCC33;
+            border-radius: 0 0 25px 0;
         }
 
-        .lcars-body-grid {
+        /* --- LAYOUT GRIGLIA LCARS (Orologio, Batteria e Testi) --- */
+        .lcars-main-grid {
             display: flex;
             flex-direction: row;
             flex-grow: 1;
-            padding-bottom: 30px; 
+            padding: 10px 10px 0 0;
+            box-sizing: border-box;
         }
 
-        .lcars-left-pillar {
+        /* Colonna di controllo sinistra */
+        .lcars-control-pillar {
             width: 70px;
             display: flex;
             flex-direction: column;
@@ -177,8 +106,8 @@
         }
         .pillar-ext {
             flex-grow: 1;
-            background-color: #9999FF;
-            border-radius: 0 0 0 25px;
+            background-color: #FF9900;
+            border-radius: 25px 0 0 0;
         }
 
         .c-orange { background-color: #FF9900; }
@@ -186,17 +115,17 @@
         .c-yellow { background-color: #FFCC33; }
         .c-blue   { background-color: #9999FF; }
 
-        .lcars-right-feed {
+        /* Area Dati principale */
+        .lcars-data-feed {
             flex-grow: 1;
-            padding: 10px 15px 10px 5px;
+            padding: 0 5px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             box-sizing: border-box;
         }
 
         .section-header {
-            color: #FFCC33;
+            color: #CC99CC;
             font-size: 0.9rem;
             letter-spacing: 1px;
             border-bottom: 1px solid #333344;
@@ -205,7 +134,8 @@
             text-transform: uppercase;
         }
 
-        .chrono-container {
+        /* OROLOGIO E DATA STELLARE */
+        .chrono-matrix {
             background-color: #07070c;
             border: 1px solid #222233;
             padding: 10px;
@@ -221,20 +151,20 @@
             display: flex;
             flex-direction: column;
             font-size: 0.8rem;
-            color: #CC99CC;
+            color: #FF9900;
             font-weight: bold;
         }
 
         .chrono-time {
             font-size: 2.2rem;
             font-weight: bold;
-            color: #FFCC33;
+            color: #00FFCC;
             line-height: 1;
             font-feature-settings: "tnum";
         }
 
-        /* --- REAL HARDWARE TELEMETRY BARS --- */
-        .hardware-monitor-deck {
+        /* MODULO BATTERIA REALE */
+        .telemetry-module {
             margin: 15px 0;
             display: flex;
             flex-direction: column;
@@ -256,30 +186,23 @@
             border-radius: 4px;
             width: 100%;
             overflow: hidden;
-            position: relative;
         }
 
         .lcars-dynamic-bar-fill {
             height: 100%;
-            width: 50%; /* Controllato da JS */
+            width: 0%; /* Controllato da JS */
             background-color: #FF9900;
             border-radius: 4px;
             transition: width 0.5s ease-out, background-color 0.5s ease;
         }
 
-        .big-class {
+        /* ANALISI PIANETA (TESTI PULITI) */
+        .class-heading {
             font-size: 3rem;
             font-weight: bold;
             color: #FF9900;
             line-height: 1;
             margin-bottom: 2px;
-        }
-
-        .alt-tag {
-            color: #CC99CC;
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 12px;
         }
 
         .telemetry-item {
@@ -298,143 +221,79 @@
             margin: 10px 0 0 0;
         }
 
-        .bottom-status-block {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+        .bottom-status {
+            font-size: 0.85rem;
+            color: #555566;
+            margin-top: auto;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-<div class="control-panel">
-    <h3>Wallpaper Customizer v3.0</h3>
-    <p style="font-size:0.85rem; color:#888;">Hardware modules (Battery/Clock) are automated. Use inputs below to personalize local stellar targets.</p>
-    
-    <div class="input-group">
-        <label>System Heading:</label>
-        <input type="text" id="inHeading" value="MAIN DIAGNOSTICS">
-    </div>
-
-    <div class="input-group">
-        <label>Primary Classification:</label>
-        <input type="text" id="inClass" value="CLASS M">
-    </div>
-
-    <div class="input-group">
-        <label>Alternative Class:</label>
-        <input type="text" id="inAlt" value="ALTERNATIVE: CLASS L (MARGINAL)">
-    </div>
-
-    <div class="input-group">
-        <label>Profile Label:</label>
-        <input type="text" id="inProfile" value="EARTH-LIKE WORLD">
-    </div>
-
-    <div class="input-group">
-        <label>Telemetry Analysis Paragraph:</label>
-        <textarea id="inDesc" rows="3">Stable nitrogen-oxygen atmosphere detected. Liquid water bodies present with dense indigenous bio-signatures. Ideal for long-term humanoid colonization assets.</textarea>
-    </div>
-
-    <button class="btn-capture" onclick="generateHighResWallpaper()">[ Export 1080x2340 PNG ]</button>
-</div>
-
-<div class="phone-wrapper">
-    <div class="phone-canvas" id="wallpaperBox">
+    <div class="live-wallpaper-container">
         
         <div class="notch-buffer"></div>
 
-        <div class="lcars-header-arch">
-            <div class="arch-left-curve"></div>
-            <div class="arch-mid-gap" id="txtHeading">MAIN DIAGNOSTICS</div>
-            <div class="arch-right-block"></div>
-        </div>
-
-        <div class="lcars-body-grid">
+        <div class="lcars-main-grid">
             
-            <div class="lcars-left-pillar">
+            <div class="lcars-control-pillar">
+                <div class="pillar-ext"></div>
                 <div class="pillar-block c-orange">SYS</div>
                 <div class="pillar-block c-purple">BATT</div>
-                <div class="pillar-block c-yellow">STOR</div>
-                <div class="pillar-block c-blue">NAV</div>
-                <div class="pillar-block c-orange">LOG</div>
-                <div class="pillar-ext"></div>
+                <div class="pillar-block c-yellow">REC</div>
+                <div class="pillar-block c-blue">LOG</div>
             </div>
 
-            <div class="lcars-right-feed">
+            <div class="lcars-data-feed">
                 
-                <div class="top-data-segment">
-                    
-                    <div class="section-header">Chronometer & Temporal Matrix</div>
-                    <div class="chrono-container">
-                        <div class="chrono-label">
-                            <span>STARDATE</span>
-                            <span id="stardateField" style="color: #FFF;">3312.14</span>
-                        </div>
-                        <div class="chrono-time" id="clockField">00:00:00</div>
+                <div class="chrono-matrix">
+                    <div class="chrono-label">
+                        <span>STARDATE</span>
+                        <span id="stardateField" style="color: #FFF;">3312.14</span>
                     </div>
+                    <div class="chrono-time" id="clockField">00:00:00</div>
+                </div>
 
-                    <div class="section-header">Ship Hardware Telemetry</div>
-                    <div class="hardware-monitor-deck">
-                        
-                        <div class="battery-module">
-                            <div class="bar-label-grid">
-                                <span style="color:#00FFCC;">BATTERY CORE FLUX</span>
-                                <span id="lblBattery" style="color:#FFF;">DETECTING...</span>
-                            </div>
-                            <div class="lcars-dynamic-bar-bg">
-                                <div class="lcars-dynamic-bar-fill" id="barBattery" style="width: 0%; background-color: #00FFCC;"></div>
-                            </div>
+                <div class="telemetry-module">
+                    <div class="battery-readout">
+                        <div class="bar-label-grid">
+                            <span style="color:#00FFCC;">BATTERY CORE FLUX</span>
+                            <span id="lblBattery" style="color:#FFF;">---%</span>
                         </div>
-
-                        <div class="storage-module">
-                            <div class="bar-label-grid">
-                                <span style="color:#CC99CC;">STORAGE DATA NODE</span>
-                                <span id="lblStorage" style="color:#FFF;">74.2% ALLOC</span>
-                            </div>
-                            <div class="lcars-dynamic-bar-bg">
-                                <div class="lcars-dynamic-bar-fill" id="barStorage" style="width: 74.2%; background-color: #CC99CC;"></div>
-                            </div>
+                        <div class="lcars-dynamic-bar-bg">
+                            <div class="lcars-dynamic-bar-fill" id="barBattery"></div>
                         </div>
-
                     </div>
+                </div>
 
+                <div class="class-segment">
                     <div class="section-header">Astrographic Scan Analysis</div>
-                    <div class="big-class" id="txtClass">CLASS M</div>
-                    <div class="alt-tag" id="txtAlt">ALTERNATIVE: CLASS L (MARGINAL)</div>
+                    <div class="class-heading">CLASS M</div>
                     
-                    <div class="telemetry-item"><span class="t-dim">PROFILE:</span> <span class="t-val" id="txtProfile">EARTH-LIKE WORLD</span></div>
-                    
-                    <p class="desc-paragraph" id="txtDesc">
-                        Stable nitrogen-oxygen atmosphere detected. Liquid water bodies present with dense indigenous bio-signatures. Ideal for long-term humanoid colonization assets.
+                    <div class="telemetry-item"><span class="t-dim">PROFILE:</span> <span class="t-val">EARTH-LIKE WORLD</span></div>
+                    <p class="desc-paragraph">
+                        Stable nitrogen-oxygen atmosphere. Indigenous life forms present. Environment within standard colonization parameters. Buffer V is active. Signals are secured.
                     </p>
                 </div>
 
-                <div class="bottom-status-block">
-                    <div class="section-header" style="margin-bottom: 4px;">Subspace Transceiver</div>
-                    <div class="telemetry-item" style="font-size: 0.85rem;"><span class="t-dim">DEVICE_NODE:</span> <span class="t-val" style="color: #CC99CC;">REDMI_N8P_HARDWARE_CONNECTED</span></div>
-                </div>
+                <div class="bottom-status">REDMI_N8P_HARDWARE_CONNECTED</div>
 
             </div>
         </div>
 
+        <div class="lcars-bar-bottom">
+            <div class="bar-left-block"></div>
+            <div class="bar-mid-segment">REDMI_N8P // LCARS_INTERFACE_8</div>
+            <div class="bar-right-curve"></div>
+        </div>
+
     </div>
-    <div class="canvas-info">Redmi Note 8 Pro Workspace (Hardware Link)</div>
-</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        setupLiveBinders();
         startShipChronometer();
-        
-        // ATTIVAZIONE DIRETTA MONITOR BATTERIA SUL SMARTPHONE
         linkRealBatteryHardware();
-        
-        // Animazione accattivante fissa per lo storage simulato
-        setTimeout(() => {
-            document.getElementById('barStorage').style.width = "78.4%";
-            document.getElementById('lblStorage').textContent = "78.4% ALLOC";
-        }, 800);
     });
 
     // SINCRES CON L'HARDWARE DELLA BATTERIA DI ANDROID
@@ -468,17 +327,14 @@
 
                 updateBatteryUI();
 
-                // Ascolta gli eventi di carica/scarica in tempo reale sul telefono
+                // Ascolta gli eventi di carica/scarica in tempo reale
                 battery.addEventListener('levelchange', updateBatteryUI);
                 battery.addEventListener('chargingchange', updateBatteryUI);
             });
-        } else {
-            // Riserva in caso il browser blocchi le API (es. export statico da pc)
-            lblBattery.textContent = "84% [STANDBY]";
-            barBattery.style.width = "84%";
         }
     }
 
+    // OROLOGIO AD ALTA PRECISIONE
     function startShipChronometer() {
         const clockField = document.getElementById('clockField');
         const stardateField = document.getElementById('stardateField');
@@ -491,6 +347,7 @@
             
             clockField.textContent = `${hours}:${minutes}:${seconds}`;
 
+            // Calcolo di una data stellare dinamica
             let year = now.getFullYear();
             let start = new Date(year, 0, 0);
             let diff = now - start;
@@ -502,46 +359,7 @@
         }
 
         updateClock();
-        setInterval(updateClock, 1000);
-    }
-
-    function setupLiveBinders() {
-        const binds = [
-            { input: 'inHeading', target: 'txtHeading', upper: true },
-            { input: 'inClass', target: 'txtClass', upper: true },
-            { input: 'inAlt', target: 'txtAlt', upper: true },
-            { input: 'inProfile', target: 'txtProfile', upper: true },
-            { input: 'inDesc', target: 'txtDesc', upper: false }
-        ];
-
-        binds.forEach(b => {
-            document.getElementById(b.input).addEventListener('input', function() {
-                let val = b.upper ? this.value.toUpperCase() : this.value;
-                document.getElementById(b.target).textContent = val || '--';
-            });
-        });
-    }
-
-    function generateHighResWallpaper() {
-        const target = document.getElementById('wallpaperBox');
-        const targetWidth = 1080;
-        const currentWidth = target.offsetWidth;
-        const computedScale = targetWidth / currentWidth;
-
-        html2canvas(target, {
-            logging: false,
-            backgroundColor: '#000000',
-            useCORS: true,
-            scale: computedScale, 
-            windowWidth: currentWidth,
-            windowHeight: target.offsetHeight
-        }).then(canvas => {
-            const image = canvas.toDataURL("image/png");
-            const link = document.createElement('a');
-            link.download = 'lcars_redmi_note8pro_hardware.png';
-            link.href = image;
-            link.click();
-        });
+        setInterval(updateClock, 1000); // Aggiorna ogni secondo
     }
 </script>
 
