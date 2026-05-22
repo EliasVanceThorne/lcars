@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCARS REDMI NOTE 8 PRO - BATTERY LINK MATRIX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0b0b0e;
+            color: #FF9900;
+            font-family: 'Antonio', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 30px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .control-panel {
+            width: 380px;
+            background-color: #12121c;
+            border: 2px solid #222233;
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+            height: fit-content;
+        }
+
+        .control-panel h3 {
+            color: #9999FF;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #333344;
+            padding-bottom: 8px;
+        }
+
+        .input-group { margin-bottom: 15px; }
+
+        label {
+            display: block;
+            color: #CC99CC;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background-color: #000;
+            border: 1px solid #444466;
+            color: #FFF;
+            padding: 8px;
+            font-family: 'Antonio', sans-serif;
+            font-size: 1rem;
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        button.btn-capture {
+            width: 100%;
+            background-color: #00FFCC;
+            color: #000;
+            padding: 12px;
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        /* --- REDMI NOTE 8 PRO CANVAS (1080x2340) --- */
+        .phone-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .phone-canvas {
+            width: 415px;  
+            height: 900px; 
+            background-color: #000000;
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 4px solid #222222;
+            border-radius: 24px;
+        }
+
+        .canvas-info {
+            color: #555566;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        .notch-buffer { height: 45px; width: 100%; }
+
+        .lcars-header-arch {
+            display: flex;
+            flex-direction: row;
+            height: 50px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .arch-left-curve {
+            width: 70px;
+            background-color: #FFCC33;
+            border-radius: 25px 0 0 0;
+            margin-right: 6px;
+        }
+
+        .arch-mid-gap {
+            flex-grow: 1;
+            border-top: 12px solid #FFCC33;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: #FFCC33;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .arch-right-block {
+            width: 50px;
+            background-color: #CC99CC;
+            border-radius: 0 15px 0 0;
+        }
+
+        .lcars-body-grid {
+            display: flex;
+            flex-direction: row;
+            flex-grow: 1;
+            padding-bottom: 30px; 
+        }
+
+        .lcars-left-pillar {
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        .pillar-block {
+            height: 40px;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: right;
+            padding-right: 8px;
+            line-height: 40px;
+        }
+        .pillar-ext {
+            flex-grow: 1;
+            background-color: #9999FF;
+            border-radius: 0 0 0 25px;
+        }
+
+        .c-orange { background-color: #FF9900; }
+        .c-purple { background-color: #CC99CC; }
+        .c-yellow { background-color: #FFCC33; }
+        .c-blue   { background-color: #9999FF; }
+
+        .lcars-right-feed {
+            flex-grow: 1;
+            padding: 10px 15px 10px 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .section-header {
+            color: #FFCC33;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #333344;
+            padding-bottom: 2px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .chrono-container {
+            background-color: #07070c;
+            border: 1px solid #222233;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chrono-label {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.8rem;
+            color: #CC99CC;
+            font-weight: bold;
+        }
+
+        .chrono-time {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #FFCC33;
+            line-height: 1;
+            font-feature-settings: "tnum";
+        }
+
+        /* --- REAL HARDWARE TELEMETRY BARS --- */
+        .hardware-monitor-deck {
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bar-label-grid {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .lcars-dynamic-bar-bg {
+            height: 16px;
+            background-color: #151522;
+            border-radius: 4px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .lcars-dynamic-bar-fill {
+            height: 100%;
+            width: 50%; /* Controllato da JS */
+            background-color: #FF9900;
+            border-radius: 4px;
+            transition: width 0.5s ease-out, background-color 0.5s ease;
+        }
+
+        .big-class {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FF9900;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .alt-tag {
+            color: #CC99CC;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .telemetry-item {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .t-dim { color: #777799; }
+        .t-val { color: #FFF; }
+
+        .desc-paragraph {
+            color: #DDDDDD;
+            font-size: 0.9rem;
+            line-height: 1.3;
+            margin: 10px 0 0 0;
+        }
+
+        .bottom-status-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="control-panel">
+    <h3>Wallpaper Customizer v3.0</h3>
+    <p style="font-size:0.85rem; color:#888;">Hardware modules (Battery/Clock) are automated. Use inputs below to personalize local stellar targets.</p>
+    
+    <div class="input-group">
+        <label>System Heading:</label>
+        <input type="text" id="inHeading" value="MAIN DIAGNOSTICS">
+    </div>
+
+    <div class="input-group">
+        <label>Primary Classification:</label>
+        <input type="text" id="inClass" value="CLASS M">
+    </div>
+
+    <div class="input-group">
+        <label>Alternative Class:</label>
+        <input type="text" id="inAlt" value="ALTERNATIVE: CLASS L (MARGINAL)">
+    </div>
+
+    <div class="input-group">
+        <label>Profile Label:</label>
+        <input type="text" id="inProfile" value="EARTH-LIKE WORLD">
+    </div>
+
+    <div class="input-group">
+        <label>Telemetry Analysis Paragraph:</label>
+        <textarea id="inDesc" rows="3">Stable nitrogen-oxygen atmosphere detected. Liquid water bodies present with dense indigenous bio-signatures. Ideal for long-term humanoid colonization assets.</textarea>
+    </div>
+
+    <button class="btn-capture" onclick="generateHighResWallpaper()">[ Export 1080x2340 PNG ]</button>
+</div>
+
+<div class="phone-wrapper">
+    <div class="phone-canvas" id="wallpaperBox">
+        
+        <div class="notch-buffer"></div>
+
+        <div class="lcars-header-arch">
+            <div class="arch-left-curve"></div>
+            <div class="arch-mid-gap" id="txtHeading">MAIN DIAGNOSTICS</div>
+            <div class="arch-right-block"></div>
+        </div>
+
+        <div class="lcars-body-grid">
+            
+            <div class="lcars-left-pillar">
+                <div class="pillar-block c-orange">SYS</div>
+                <div class="pillar-block c-purple">BATT</div>
+                <div class="pillar-block c-yellow">STOR</div>
+                <div class="pillar-block c-blue">NAV</div>
+                <div class="pillar-block c-orange">LOG</div>
+                <div class="pillar-ext"></div>
+            </div>
+
+            <div class="lcars-right-feed">
+                
+                <div class="top-data-segment">
+                    
+                    <div class="section-header">Chronometer & Temporal Matrix</div>
+                    <div class="chrono-container">
+                        <div class="chrono-label">
+                            <span>STARDATE</span>
+                            <span id="stardateField" style="color: #FFF;">3312.14</span>
+                        </div>
+                        <div class="chrono-time" id="clockField">00:00:00</div>
+                    </div>
+
+                    <div class="section-header">Ship Hardware Telemetry</div>
+                    <div class="hardware-monitor-deck">
+                        
+                        <div class="battery-module">
+                            <div class="bar-label-grid">
+                                <span style="color:#00FFCC;">BATTERY CORE FLUX</span>
+                                <span id="lblBattery" style="color:#FFF;">DETECTING...</span>
+                            </div>
+                            <div class="lcars-dynamic-bar-bg">
+                                <div class="lcars-dynamic-bar-fill" id="barBattery" style="width: 0%; background-color: #00FFCC;"></div>
+                            </div>
+                        </div>
+
+                        <div class="storage-module">
+                            <div class="bar-label-grid">
+                                <span style="color:#CC99CC;">STORAGE DATA NODE</span>
+                                <span id="lblStorage" style="color:#FFF;">74.2% ALLOC</span>
+                            </div>
+                            <div class="lcars-dynamic-bar-bg">
+                                <div class="lcars-dynamic-bar-fill" id="barStorage" style="width: 74.2%; background-color: #CC99CC;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="section-header">Astrographic Scan Analysis</div>
+                    <div class="big-class" id="txtClass">CLASS M</div>
+                    <div class="alt-tag" id="txtAlt">ALTERNATIVE: CLASS L (MARGINAL)</div>
+                    
+                    <div class="telemetry-item"><span class="t-dim">PROFILE:</span> <span class="t-val" id="txtProfile">EARTH-LIKE WORLD</span></div>
+                    
+                    <p class="desc-paragraph" id="txtDesc">
+                        Stable nitrogen-oxygen atmosphere detected. Liquid water bodies present with dense indigenous bio-signatures. Ideal for long-term humanoid colonization assets.
+                    </p>
+                </div>
+
+                <div class="bottom-status-block">
+                    <div class="section-header" style="margin-bottom: 4px;">Subspace Transceiver</div>
+                    <div class="telemetry-item" style="font-size: 0.85rem;"><span class="t-dim">DEVICE_NODE:</span> <span class="t-val" style="color: #CC99CC;">REDMI_N8P_HARDWARE_CONNECTED</span></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="canvas-info">Redmi Note 8 Pro Workspace (Hardware Link)</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setupLiveBinders();
+        startShipChronometer();
+        
+        // ATTIVAZIONE DIRETTA MONITOR BATTERIA SUL SMARTPHONE
+        linkRealBatteryHardware();
+        
+        // Animazione accattivante fissa per lo storage simulato
+        setTimeout(() => {
+            document.getElementById('barStorage').style.width = "78.4%";
+            document.getElementById('lblStorage').textContent = "78.4% ALLOC";
+        }, 800);
+    });
+
+    // SINCRES CON L'HARDWARE DELLA BATTERIA DI ANDROID
+    function linkRealBatteryHardware() {
+        const lblBattery = document.getElementById('lblBattery');
+        const barBattery = document.getElementById('barBattery');
+
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(function(battery) {
+                function updateBatteryUI() {
+                    let level = Math.round(battery.level * 100);
+                    let isCharging = battery.charging;
+
+                    // Aggiorna testo percentuale
+                    lblBattery.textContent = level + "%" + (isCharging ? " [CHARGING]" : " [DISCHG]");
+                    
+                    // Modifica la lunghezza della barra LCARS
+                    barBattery.style.width = level + "%";
+
+                    // Colore dinamico in stile LCARS
+                    if (isCharging) {
+                        barBattery.style.backgroundColor = "#00FFCC"; // Cyan carica attiva
+                    } else if (level <= 20) {
+                        barBattery.style.backgroundColor = "#FF3333"; // Rosso emergenza energetica
+                    } else if (level <= 50) {
+                        barBattery.style.backgroundColor = "#FF9900"; // Arancione intermedio
+                    } else {
+                        barBattery.style.backgroundColor = "#FFCC33"; // Giallo LCARS nominale
+                    }
+                }
+
+                updateBatteryUI();
+
+                // Ascolta gli eventi di carica/scarica in tempo reale sul telefono
+                battery.addEventListener('levelchange', updateBatteryUI);
+                battery.addEventListener('chargingchange', updateBatteryUI);
+            });
+        } else {
+            // Riserva in caso il browser blocchi le API (es. export statico da pc)
+            lblBattery.textContent = "84% [STANDBY]";
+            barBattery.style.width = "84%";
+        }
+    }
+
+    function startShipChronometer() {
+        const clockField = document.getElementById('clockField');
+        const stardateField = document.getElementById('stardateField');
+
+        function updateClock() {
+            const now = new Date();
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            clockField.textContent = `${hours}:${minutes}:${seconds}`;
+
+            let year = now.getFullYear();
+            let start = new Date(year, 0, 0);
+            let diff = now - start;
+            let oneDay = 1000 * 60 * 60 * 24;
+            let dayOfYear = Math.floor(diff / oneDay);
+            let stardate = (year + (dayOfYear / 365)).toFixed(2);
+            
+            stardateField.textContent = stardate;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+
+    function setupLiveBinders() {
+        const binds = [
+            { input: 'inHeading', target: 'txtHeading', upper: true },
+            { input: 'inClass', target: 'txtClass', upper: true },
+            { input: 'inAlt', target: 'txtAlt', upper: true },
+            { input: 'inProfile', target: 'txtProfile', upper: true },
+            { input: 'inDesc', target: 'txtDesc', upper: false }
+        ];
+
+        binds.forEach(b => {
+            document.getElementById(b.input).addEventListener('input', function() {
+                let val = b.upper ? this.value.toUpperCase() : this.value;
+                document.getElementById(b.target).textContent = val || '--';
+            });
+        });
+    }
+
+    function generateHighResWallpaper() {
+        const target = document.getElementById('wallpaperBox');
+        const targetWidth = 1080;
+        const currentWidth = target.offsetWidth;
+        const computedScale = targetWidth / currentWidth;
+
+        html2canvas(target, {
+            logging: false,
+            backgroundColor: '#000000',
+            useCORS: true,
+            scale: computedScale, 
+            windowWidth: currentWidth,
+            windowHeight: target.offsetHeight
+        }).then(canvas => {
+            const image = canvas.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.download = 'lcars_redmi_note8pro_hardware.png';
+            link.href = image;
+            link.click();
+        });
+    }
+</script>
+
+</body>
+</html>
